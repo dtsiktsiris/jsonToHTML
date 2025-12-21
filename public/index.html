@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- <button onclick="clicked()">Click me</button> -->
+    <div id="jsonHolder"></div>
+</body>
+<script>
+    const json = {
+        "user": {
+            "id": 12345,
+            "username": "coder_gal",
+            "isActive": true,
+            "roles": ["admin", "editor"],
+            "profile": {
+                "firstName": "Jane",
+                "lastName": "Doe",
+                "email": "jane.doe@example.com"
+            },
+            "settings": null
+        },
+        "products": [
+            {
+                "productId": "P101",
+                "name": "Wireless Mouse",
+                "price": 25.99
+            },
+            {
+                "productId": "P102",
+                "name": "Mechanical Keyboard",
+                "price": 79.99
+            }
+        ]
+    }
+    let jsonhtml = ''
+    function eachRecursive(obj) {
+
+        for (var k in obj) {
+            if (typeof obj[k] == 'object' && obj[k] !== null) {
+                if (Array.isArray(obj[k])) {
+                    jsonhtml += '<div class="array">' + k + ' [';
+
+                } else {
+                    jsonhtml += '<div class="object">' + k + ' {';
+
+                }
+                jsonhtml += '<div class="identate">'
+                eachRecursive(obj[k])
+                if (Array.isArray(obj[k])) {
+                    jsonhtml += '</div>]';
+
+                } else {
+                    jsonhtml += '</div>}';
+
+                }
+                jsonhtml += '</div>';
+
+            }
+            else {
+                jsonhtml += '<div class="key">';
+                jsonhtml += k + " : " + obj[k];
+                jsonhtml += '</div>';
+            }
+        }
+        // return jsonhtml
+    }
+
+    // function clicked() {
+        eachRecursive(json)
+        console.log(jsonhtml);
+
+        document.getElementById('jsonHolder').innerHTML = jsonhtml
+
+    // }
+
+</script>
+<style>
+    .object {
+        background-color: aquamarine;
+    }
+
+    .array {
+        background-color: blanchedalmond;
+    }
+
+    .identate {
+        padding-left: 50px;
+    }
+</style>
+
+</html>
