@@ -6,10 +6,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .container {
+        display: flex;
+        height: 100vh;
+        width: 100vw;
+    }
+
+    .leftSidebar {
+        background-color: lightblue;
+        height: 100vh;
+        width: 300px;
+    }
+
+    .content {
+        background-color: lightgreen;
+        flex-grow: 1;
+        height: 100%;
+    }
+
+    .rightSidebar {
+        background-color: lightpink;
+        height: 100vh;
+        width: 300px;
+    }
+
+    .object {
+        background-color: aquamarine;
+    }
+
+    .array {
+        background-color: blanchedalmond;
+    }
+
+    .identate {
+        padding-left: 50px;
+    }
+</style>
 
 <body>
-    <!-- <button onclick="clicked()">Click me</button> -->
-    <div id="jsonHolder"></div>
+    <div class="container">
+        <div class="leftSidebar"></div>
+        <div class="content">
+            <div id="jsonHolder"></div>
+        </div>
+        <div class="rightSidebar"></div>
+    </div>
 </body>
 <script>
     const json = {
@@ -63,35 +111,18 @@
 
             }
             else {
-                jsonhtml += '<div class="key">';
+                jsonhtml += '<div class="key-value">';
                 jsonhtml += k + " : " + obj[k];
                 jsonhtml += '</div>';
             }
         }
-        // return jsonhtml
     }
 
-    // function clicked() {
-        eachRecursive(json)
-        console.log(jsonhtml);
+    eachRecursive(json)
+    console.log(jsonhtml);
 
-        document.getElementById('jsonHolder').innerHTML = jsonhtml
-
-    // }
+    document.getElementById('jsonHolder').innerHTML = jsonhtml
 
 </script>
-<style>
-    .object {
-        background-color: aquamarine;
-    }
-
-    .array {
-        background-color: blanchedalmond;
-    }
-
-    .identate {
-        padding-left: 50px;
-    }
-</style>
 
 </html>
