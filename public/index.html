@@ -3,60 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css" />
     <title>Document</title>
   </head>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    .container {
-      display: flex;
-      height: 100vh;
-      width: 100vw;
-    }
-
-    .leftSidebar {
-      background-color: lightblue;
-      height: 100vh;
-      width: 300px;
-    }
-
-    .content {
-      background-color: lightgreen;
-      flex-grow: 1;
-      height: 100%;
-    }
-
-    .rightSidebar {
-      background-color: lightpink;
-      height: 100vh;
-      width: 300px;
-    }
-
-    .object {
-      background-color: lightcyan;
-    }
-
-    .array {
-      background-color: lightyellow;
-    }
-
-    .identate {
-      padding-left: 50px;
-    }
-
-    .key-value {
-      margin: 12px;
-    }
-    .key {
-      border-radius: 4px;
-      background-color: lightgrey;
-      padding: 2px;
-    }
-  </style>
 
   <body>
     <div class="container">
@@ -64,7 +13,7 @@
       <div class="content">
         <div id="jsonHolder"></div>
       </div>
-      <div class="rightSidebar">
+      <div id="rightSidebar" class="rightSidebar">
         <div id="variables">drop here</div>
       </div>
     </div>
@@ -97,12 +46,20 @@
       ],
     };
 
+    const variableCard = (name) => {
+      const newDiv = document.createElement("div");
+      newDiv.innerText = name;
+      return newDiv;
+    };
+
     const generateKeyElement = (text) => {
-      return '<span id="key" class="key" uid="' +
+      return (
+        '<span id="key" class="key" uid="' +
         crypto.randomUUID() +
         '" draggable="true">' +
         text +
-        "</span>";
+        "</span>"
+      );
     };
 
     let jsonhtml = "";
@@ -133,6 +90,8 @@
     eachRecursive(json);
     document.getElementById("jsonHolder").innerHTML = jsonhtml;
 
+    const generateJSONPath = (uid) => {};
+
     const target = document.getElementById("variables");
 
     // Cancel dragover so that drop can fire
@@ -142,8 +101,11 @@
     target.addEventListener("drop", (ev) => {
       ev.preventDefault();
       const data = ev.dataTransfer.getData("application/json");
-      // const datao = JSON.parse(data)
-      console.log(data);
+      const datao = JSON.parse(data);
+      document
+        .getElementById("rightSidebar")
+        .appendChild(variableCard(datao.name));
+      console.log(datao);
     });
 
     function dragstartHandler(ev) {
