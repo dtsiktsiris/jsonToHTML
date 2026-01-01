@@ -52,24 +52,32 @@
       return newDiv;
     };
 
-    const generateKeyElement = (text) => {
-      return (
-        '<span id="key" class="key" uid="' +
-        crypto.randomUUID() +
-        '" draggable="true">' +
-        text +
-        "</span>"
-      );
+    const generateKeyElement = (text, path) => {
+      return `<span id="key" class="key" 
+        path="${path}" 
+        uid="${crypto.randomUUID()}" 
+        draggable="true">${text}
+        </span>`;
     };
 
     let jsonhtml = "";
+
+    let jsonPath = [];
+    let state = "";
     function eachRecursive(obj) {
       for (var k in obj) {
+        jsonPath.push(k);
         if (typeof obj[k] == "object" && obj[k] !== null) {
           if (Array.isArray(obj[k])) {
-            jsonhtml += '<div class="array">' + generateKeyElement(k) + " [";
+            jsonhtml +=
+              '<div class="array">' +
+              generateKeyElement(k, jsonPath.join(".")) +
+              " [";
           } else {
-            jsonhtml += '<div class="object">' + generateKeyElement(k) + " {";
+            jsonhtml +=
+              '<div class="object">' +
+              generateKeyElement(k, jsonPath.join(".")) +
+              " {";
           }
           jsonhtml += '<div class="identate">';
           eachRecursive(obj[k]);
@@ -81,16 +89,16 @@
           jsonhtml += "</div>";
         } else {
           jsonhtml += '<div class="key-value">';
-          jsonhtml += generateKeyElement(k) + " : " + obj[k];
+          jsonhtml +=
+            generateKeyElement(k, jsonPath.join(".")) + " : " + obj[k];
           jsonhtml += "</div>";
         }
+        jsonPath.pop();
       }
     }
 
     eachRecursive(json);
     document.getElementById("jsonHolder").innerHTML = jsonhtml;
-
-    const generateJSONPath = (uid) => {};
 
     const target = document.getElementById("variables");
 
