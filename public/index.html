@@ -81,10 +81,12 @@
           }
           jsonhtml += '<div class="identate">';
           eachRecursive(obj[k]);
+          jsonhtml += "</div>";
+
           if (Array.isArray(obj[k])) {
-            jsonhtml += "</div>]";
+            jsonhtml += "]";
           } else {
-            jsonhtml += "</div>}";
+            jsonhtml += "}";
           }
           jsonhtml += "</div>";
         } else {
@@ -120,9 +122,10 @@
       // Add different types of drag data
       const name = ev.target.innerText;
       const uid = ev.target.getAttribute("uid");
+      const path = ev.target.getAttribute("path");
       ev.dataTransfer.setData(
         "application/json",
-        JSON.stringify({ name: name, uid: uid })
+        JSON.stringify({ name: name, uid: uid, path: path })
       );
       console.log(ev.target);
     }
