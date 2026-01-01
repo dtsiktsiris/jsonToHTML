@@ -48,3 +48,9 @@
       background-color: lightgrey;
       padding: 2px;
     }
+    .cardVariable {
+      border-radius: 4px;
+      background-color: lightgrey;
+      padding: 2px;
+      margin: 2px;
+    }

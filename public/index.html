@@ -46,10 +46,16 @@
       ],
     };
 
-    const variableCard = (name) => {
-      const newDiv = document.createElement("div");
-      newDiv.innerText = name;
-      return newDiv;
+    const variableCard = (name, path) => {
+      const card = document.createElement("div");
+      card.setAttribute('class', 'cardVariable');
+      const nameHolder = document.createElement("div");
+      const pathHolder = document.createElement("div");
+      nameHolder.innerText = name;
+      pathHolder.innerText = path;
+      card.appendChild(nameHolder)
+      card.appendChild(pathHolder)
+      return card;
     };
 
     const generateKeyElement = (text, path) => {
@@ -69,6 +75,7 @@
         jsonPath.push(k);
         if (typeof obj[k] == "object" && obj[k] !== null) {
           if (Array.isArray(obj[k])) {
+            // jsonPath.push("dt_array_dt");
             jsonhtml +=
               '<div class="array">' +
               generateKeyElement(k, jsonPath.join(".")) +
@@ -114,7 +121,7 @@
       const datao = JSON.parse(data);
       document
         .getElementById("rightSidebar")
-        .appendChild(variableCard(datao.name));
+        .appendChild(variableCard(datao.name, datao.path));
       console.log(datao);
     });
 
