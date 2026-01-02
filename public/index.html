@@ -48,13 +48,13 @@
 
     const variableCard = (name, path) => {
       const card = document.createElement("div");
-      card.setAttribute('class', 'cardVariable');
+      card.setAttribute("class", "cardVariable");
       const nameHolder = document.createElement("div");
       const pathHolder = document.createElement("div");
       nameHolder.innerText = name;
       pathHolder.innerText = path;
-      card.appendChild(nameHolder)
-      card.appendChild(pathHolder)
+      card.appendChild(nameHolder);
+      card.appendChild(pathHolder);
       return card;
     };
 
@@ -111,6 +111,20 @@
 
     const target = document.getElementById("variables");
 
+    const normalizePath = (path) => {
+      const pathList = path.split(".");
+      let normPath = [];
+      for (let i = 0; i < pathList.length; i++) {
+        if (!isNaN(parseFloat(pathList[i + 1]))) {
+          normPath.push(pathList[i] + "[" + pathList[i + 1] + "]");
+          i++;
+        } else {
+          normPath.push(pathList[i]);
+        }
+      }
+      return normPath.join(".");
+    };
+
     // Cancel dragover so that drop can fire
     target.addEventListener("dragover", (ev) => {
       ev.preventDefault();
@@ -121,7 +135,7 @@
       const datao = JSON.parse(data);
       document
         .getElementById("rightSidebar")
-        .appendChild(variableCard(datao.name, datao.path));
+        .appendChild(variableCard(datao.name, normalizePath(datao.path)));
       console.log(datao);
     });
 
