@@ -1,56 +1,68 @@
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    .container {
-      display: flex;
-      height: 100vh;
-      width: 100vw;
-    }
+.container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
 
-    .leftSidebar {
-      background-color: lightblue;
-      height: 100vh;
-      width: 300px;
-    }
+.leftSidebar {
+  background-color: lightblue;
+  height: 100vh;
+  width: 300px;
+}
 
-    .content {
-      background-color: lightgreen;
-      flex-grow: 1;
-      height: 100%;
-    }
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  background-color: lightgreen;
+  flex-grow: 1;
+  height: 100%;
+}
 
-    .rightSidebar {
-      background-color: lightpink;
-      height: 100vh;
-      width: 300px;
-    }
+.requestContainer {
+  height: 300px;
+  padding: 10px;
+}
 
-    .object {
-      background-color: lightcyan;
-    }
+.jsonResponseHolder {
+  flex-grow: 1;
+}
 
-    .array {
-      background-color: lightyellow;
-    }
+.rightSidebar {
+  background-color: lightpink;
+  height: 100vh;
+  width: 300px;
+}
 
-    .identate {
-      padding-left: 50px;
-    }
+.object {
+  background-color: lightcyan;
+}
 
-    .key-value {
-      margin: 12px;
-    }
-    .key {
-      border-radius: 4px;
-      background-color: lightgrey;
-      padding: 2px;
-    }
-    .cardVariable {
-      border-radius: 4px;
-      background-color: lightgrey;
-      padding: 2px;
-      margin: 2px;
-    }
+.array {
+  background-color: lightyellow;
+}
+
+.identate {
+  padding-left: 50px;
+}
+
+.key-value {
+  margin: 12px;
+}
+.key {
+  border-radius: 4px;
+  background-color: lightgrey;
+  padding: 2px;
+}
+.cardVariable {
+  border-radius: 4px;
+  background-color: lightgrey;
+  padding: 2px;
+  margin: 2px;
+}
