@@ -16,8 +16,12 @@
             <option value="GET">GET</option>
             <option value="POST">POST</option>
           </select>
-          <input type="text">
-          <button>Send</button>
+          <input
+            id="urlInput"
+            type="text"
+            value="https://jsonplaceholder.typicode.com/todos"
+          />
+          <button onclick="sendRequest()">Send</button>
         </div>
         <div id="jsonResponseHolder" class="jsonResponseHolder"></div>
       </div>
@@ -27,6 +31,43 @@
     </div>
   </body>
   <script>
+    let jsonhtml = "";
+    let jsonPath = [];
+
+    async function sendRequest() {
+      jsonhtml = "";
+      jsonPath = [];
+      jsonPath.push("root");
+      const url = document.getElementById("urlInput").value;
+      const response = await fetch(url);
+      const result = await response.json();
+      eachRecursive(result);
+      console.log(result);
+      document.getElementById("jsonResponseHolder").innerHTML = jsonhtml;
+
+      addDragstartListeners();
+    }
+
+    const jsonarray = [
+      {
+        userId: 1,
+        id: 1,
+        title: "delectus aut autem",
+        completed: false,
+      },
+      {
+        userId: 1,
+        id: 2,
+        title: "quis ut nam facilis et officia qui",
+        completed: false,
+      },
+      {
+        userId: 1,
+        id: 3,
+        title: "fugiat veniam minus",
+        completed: false,
+      },
+    ];
     const json = {
       user: {
         id: 12345,
@@ -67,16 +108,13 @@
     };
 
     const generateKeyElement = (text, path) => {
-      return `<span id="key" class="key" 
-        path="${path}" 
-        uid="${crypto.randomUUID()}" 
-        draggable="true">${text}
-        </span>`;
+      return `<span id="key" class="key"
+            path="${path}"
+            uid="${crypto.randomUUID()}"
+            draggable="true">${text}
+            </span>`;
     };
 
-    let jsonhtml = "";
-
-    let jsonPath = [];
     let state = "";
     function eachRecursive(obj) {
       for (var k in obj) {
@@ -114,7 +152,8 @@
       }
     }
 
-    eachRecursive(json);
+    jsonPath.push("root");
+    eachRecursive(jsonarray);
     document.getElementById("jsonResponseHolder").innerHTML = jsonhtml;
 
     const target = document.getElementById("variables");
@@ -140,6 +179,7 @@
     target.addEventListener("drop", (ev) => {
       ev.preventDefault();
       const data = ev.dataTransfer.getData("application/json");
+      console.log(data);
       const datao = JSON.parse(data);
       document
         .getElementById("rightSidebar")
@@ -152,15 +192,20 @@
       const name = ev.target.innerText;
       const uid = ev.target.getAttribute("uid");
       const path = ev.target.getAttribute("path");
+      console.log({ name: name, uid: uid, path: path });
       ev.dataTransfer.setData(
         "application/json",
         JSON.stringify({ name: name, uid: uid, path: path })
       );
       console.log(ev.target);
     }
-    let items = document.querySelectorAll(".key");
-    items.forEach(function (item) {
-      item.addEventListener("dragstart", dragstartHandler);
-    });
+
+    function addDragstartListeners() {
+      let items = document.querySelectorAll(".key");
+      items.forEach(function (item) {
+        item.addEventListener("dragstart", dragstartHandler);
+      });
+    }
+    addDragstartListeners();
   </script>
 </html>
